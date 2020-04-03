@@ -1,5 +1,5 @@
 module.exports = function(err, req, res, next){
-  console.log(err, "DARI ERROR HANDLER")
+  console.log(err.name, "DARI ERROR HANDLER", err.message)
   let statusCode = 500
   let message = "Internal Server Error!"
   switch(err.name){
@@ -23,7 +23,7 @@ module.exports = function(err, req, res, next){
       break;
     case 'NotFoundError':
     case 'ForbiddenError':
-    case 'UnauthorizedError:':
+    case 'UnauthorizedError':
     case 'BadRequestError': 
       statusCode = err.statusCode
       message = err.message

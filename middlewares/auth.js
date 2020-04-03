@@ -1,11 +1,13 @@
 const { User, Tweet } = require('../models')
 const jwt = require('jsonwebtoken')
+const createError = require('http-errors')
 
 class Auth {
-  static authentication (req, res, next){Ï
+  static authentication (req, res, next){
 
     try { 
-      req.loggedInUser = jwt.verify(req.headers.access_token)
+      req.loggedInUser = jwt.verify(req.headers.access_token, 'kucing')
+      console.log(req.loggedInUser)
       User.findByPk(req.loggedInUser.id)
         .then(result => {
           if(!result) { throw createError(404, "User not found!")}
@@ -27,7 +29,7 @@ class Auth {
 
     Tweet.findByPk(tweetId)
       .then(result => {
-        if (!result) throw createError(404, "Player not found")
+        if (!result) throw createError(404, "Tweet not found")
         if(result.UserId == req.loggedInUser.id){
           next()
         }

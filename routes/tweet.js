@@ -5,6 +5,6 @@ const Auth = require('../middlewares/auth')
 
 router.use(Auth.authentication)
 router.post('/', TweetController.create)
-router.delete('/', Auth.authorization, TweetController.delete)
+router.delete('/:id', Auth.authorization, TweetController.delete)
 
 module.exports = router;
